@@ -1,4 +1,4 @@
-# 🌾 InnovateX — Crop Insurance Fraud Detection System
+# 🌾 Innovators33 — Crop Insurance Fraud Detection System
 
 > **Team:** Debuggers &nbsp;|&nbsp; **Members:** Nilakshi Gaikwad, Vaishnavi Kandekar, Gayatri Dere &nbsp;|&nbsp; SY Comp
 
@@ -226,13 +226,13 @@ crop-insurance-app/
 
 ## 👩‍💻 Team
 
-**Debuggers — SY Comp, InnovateX Hackathon**
+
 
 | Member | Role |
 |--------|------|
 | Nilakshi Gaikwad | Full Stack / Backend |
-| Vaishnavi Kandekar | Frontend / UI |
-| Gayatri Dere | Research / Data |
+| Vaishnavi Kandekar | Full stack / Frontend |
+| Gayatri Dere | Backend / Database |
 
 ---
 
