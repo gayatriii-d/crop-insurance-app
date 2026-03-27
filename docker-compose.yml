@@ -1,0 +1,58 @@
+version: "3.9"
+
+services:
+  # ── PostgreSQL Database ─────────────────────────────────────────
+  db:
+    image: postgres:15-alpine
+    container_name: crop_insurance_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB:       crop_insurance
+      POSTGRES_USER:     postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ── Flask Backend ───────────────────────────────────────────────
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: crop_insurance_api
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      DATABASE_URL:        postgresql://postgres:password@db:5432/crop_insurance
+      OPENWEATHER_API_KEY: ${OPENWEATHER_API_KEY:-demo_key}
+      FLASK_ENV:           development
+      SECRET_KEY:          supersecret-change-in-production
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./backend:/app
+
+  # ── React Frontend ──────────────────────────────────────────────
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: crop_insurance_ui
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      REACT_APP_API_URL: http://localhost:5000/api
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
